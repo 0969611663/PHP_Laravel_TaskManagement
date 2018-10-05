@@ -1,4 +1,4 @@
-@extends('customer.layout')
+@extends('layout.base')
 
 @section('title')
     Customer manage
