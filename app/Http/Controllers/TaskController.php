@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 
-use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 
 
@@ -17,7 +16,7 @@ class TaskController extends Controller
      */
     public function index ()
     {
-        $tasks = Task::all();
+        $tasks = Task::paginate(5);
         return view('tasks.index', compact('tasks'));
     }
 
@@ -69,10 +68,20 @@ class TaskController extends Controller
 
         $task->save();
 
-        $message = "Tạo Task $request->inputTitle thành công!";
-        Session::flash('create-success', $message);
+//        $message = "Tạo Task $request->inputTitle thành công!";
+//        Session::flash('create-success', $message);
 
         return redirect()->route('tasks_index');
+    }
+
+    public function searchTask (Request $request)
+    {
+        $keyword =  $request->input('searchTask');
+        $tasks = Task::where('title', 'like', "%" . $keyword . "%")
+                ->orWhere('content', 'like', "%" . $keyword . "%")
+                ->paginate(5);
+
+        return view('tasks.index', compact('tasks'));
     }
 
     /**
@@ -117,6 +126,8 @@ class TaskController extends Controller
      */
     public function destroy ($id)
     {
-        //
+        $task = Task::find($id);
+        $task->delete();
+        return redirect()->route('tasks_index');
     }
 }

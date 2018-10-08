@@ -11,9 +11,9 @@
 |
 */
 
-Route::group(['prefix' => 'customers'], function () {
-    Route::get('/', 'CustomerController@index')->name('customers_index');
-});
+//Route::group(['prefix' => 'customers'], function () {
+//    Route::get('/', 'CustomerController@index')->name('customers_index');
+//});
 
 Route::group(['prefix' => 'home'], function (){
     Route::get('/', function (){
@@ -25,4 +25,8 @@ Route::group(['prefix' => 'home'], function (){
     Route::get('/add', 'TaskController@create')->name('task_create');
 
     Route::post('/add', 'TaskController@store')->name('task_add');
+
+    Route::get('/search', 'TaskController@searchTask')->name('task_search');
+
+    Route::get('delete/{id}', 'TaskController@destroy')->name('task_delete');
 });

@@ -8,7 +8,6 @@ class Task extends Model
 {
     protected $table = 'task_list';
 
-    public function input (string $string)
-    {
-    }
+
+
 }
