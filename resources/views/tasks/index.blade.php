@@ -49,8 +49,10 @@
                                 <img src="{{ asset('storage/images/' . $task->image) }}" alt=""
                                      style="width: 100px; height: 100px; overflow: hidden ">
                             </td>
-                            <td><a href="#" class="btn btn-info">Edit</a> <a
-                                    href="#" id="{{ $task->id }}" class="btn btn-info delete-task">Delete</a></td>
+                            <td>
+                                <a href="#" class="btn btn-info">Edit</a>
+                                <a href="#" id="{{ $task->id }}" class="btn btn-info delete-task">Delete</a>
+                            </td>
                         </tr>
                     @endforeach
                 @endif
@@ -66,20 +68,21 @@
 
 @section('ajax')
     <script>
+        //khai bao ajax
         $(document).ready(function () {
+            //bat hanh dong click vao phan tu co class la delete-task
             $('.delete-task').click(function () {
-                var taskId = $(this).attr('id');
-alert(taskId);
-                // $.ajax({
-                //     url: "http://localhost:8000/home/delete/"+ taskId,
-                //     type: "GET",
-                //     data: {
-                //         'id': taskId
-                //     },
-                //     success: function (data) {
-                //         window.location = "/";
-                //     }
-                // });
+                //lay value cua id cua phan tu co class la delete-task
+                var id = $(this).attr('id');
+                //thuc hien xoa
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:8000/home/delete/" + id,
+
+                    success: function () {
+                        window.location = '/home/task';
+                    }
+                });
             });
         });
     </script>
